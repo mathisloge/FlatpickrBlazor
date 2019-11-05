@@ -7,6 +7,7 @@
 ### MyFlatpickr.razor
 	<div>
 		<Flatpickr Hidden="true" @ref="_datepicker" Options="@calendarOpts" OnChange="@OnChangeDate" />
+		<Flatpickr Hidden="true" Options="@monthPickerOpts" PluginOptions="@monthPluginOptions" />
 	</div>
 
 	@code{
@@ -16,6 +17,18 @@
 			inline = true,
 			weekNumbers = true,
 			maxDate = DateTimeOffset.UtcNow
+		};
+
+		private FlatpickrOptions monthPickerOpts = new FlatpickrOptions{
+			inline = true
+		};
+
+		// these are already default values, so new FlatpickrPluginOptions() would fullfill everything, if you want default values
+		private FlatpickrPluginOptions monthPluginOptions = new FlatpickrPluginOptions {
+		    shortHand = false, 
+            dateFormat = "F Y",
+            altFormat = "F Y",
+            theme = "light"
 		};
 
 		private void OnChangeDate(List<DateTimeOffset> dateTimes) {
