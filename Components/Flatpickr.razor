@@ -19,6 +19,8 @@ else
 
     [Parameter]
     public FlatpickrOptions Options { get; set; }
+    [Parameter]
+    public FlatpickrPluginOptions PluginOptions { get; set; } = new FlatpickrPluginOptions();
 
     [Parameter]
     public Action<List<DateTimeOffset>> OnChange { get; set; } = null;
@@ -36,11 +38,15 @@ else
     {
         if (firstRender)
         {
-            string jsonStr = JsonSerializer.Serialize<FlatpickrOptions>(Options, new JsonSerializerOptions {
+            string optionsStr = JsonSerializer.Serialize<FlatpickrOptions>(Options, new JsonSerializerOptions {
                 IgnoreNullValues = true
             });
+            string pluginStr = JsonSerializer.Serialize<FlatpickrPluginOptions>(PluginOptions, new JsonSerializerOptions
+            {
+                IgnoreNullValues = false
+            });
             await JSRuntime.InvokeVoidAsync(
-                "flatpickrblazor.create", container, jsonStr, DotNetObjectReference.Create(jsHelper));
+                "flatpickrblazor.create", container, optionsStr, pluginStr, DotNetObjectReference.Create(jsHelper));
         }
     }
 

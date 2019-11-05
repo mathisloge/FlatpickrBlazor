@@ -9,8 +9,15 @@ function copy() {
 }
 
 function copyLoc() {
-    return src(flatpickr_dist + "/l10n/**/*")
+    return src(flatpickr_dist + "l10n/**/*")
         .pipe(dest(destination +"l10n/"));
+}
+
+function copyPlugins() {
+    var plugDir = flatpickr_dist + "plugins/";
+    return src(plugDir + "**/*")
+        .pipe(dest(destination + "plugins/"));
 }
 exports.copy = copy;
 exports.copyLoc = copyLoc;
+exports.copyPlugins = copyPlugins;
