@@ -1,0 +1,63 @@
+﻿@using Microsoft.JSInterop
+@using System.Text.Json
+@using FlatpickrBlazor
+@inject IJSRuntime JSRuntime
+
+@if(Hidden)
+{
+    <input @ref="container" hidden />
+}
+else
+{
+    <input @ref="container" />
+}
+
+@code {
+
+    [Parameter]
+    public bool Hidden { get; set; } = false;
+
+    [Parameter]
+    public FlatpickrOptions Options { get; set; }
+
+    [Parameter]
+    public Action<List<DateTimeOffset>> OnChange { get; set; } = null;
+
+    private FlatpickrJsHelper jsHelper;
+
+    private ElementReference container;
+
+    protected override void OnParametersSet()
+    {
+        jsHelper = new FlatpickrJsHelper(OnChange);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            string jsonStr = JsonSerializer.Serialize<FlatpickrOptions>(Options, new JsonSerializerOptions {
+                IgnoreNullValues = true
+            });
+            await JSRuntime.InvokeVoidAsync(
+                "flatpickrblazor.create", container, jsonStr, DotNetObjectReference.Create(jsHelper));
+        }
+    }
+
+    public async Task<DateTimeOffset[]> GetSelectedDates()
+    {
+        return await JSRuntime.InvokeAsync<DateTimeOffset[]>("flatpickrblazor.selectedDates", container);
+    }
+
+    public async Task SetDate(DateTimeOffset date, bool triggerChange = false)
+    {
+        await JSRuntime.InvokeVoidAsync(
+                "flatpickrblazor.setDate", container, date, triggerChange, null);
+    }
+
+    public async Task SetDate(DateTimeOffset date, bool triggerChange, string dateStrFormat)
+    {
+        await JSRuntime.InvokeVoidAsync(
+                "flatpickrblazor.setDate", container, date, triggerChange, dateStrFormat);
+    }
+}
