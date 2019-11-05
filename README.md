@@ -53,3 +53,8 @@ to add a locale (specify in your FlatpickrOptions variable) add the following sc
 	<script src="_content/FlatpickrBlazor/l10n/de.js"></script>
 
 and change the "de.js" with your choosed language
+
+to add the plugins, you have to include the script and style files. e.g. for the month select plugin: 
+
+	<link href="_content/FlatpickrBlazor/plugins/monthSelect/style.css" rel="stylesheet" />
+	<script src="_content/FlatpickrBlazor/plugins/monthSelect/index.js"></script>
