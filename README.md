@@ -1,6 +1,6 @@
 # flatpickr Blazor
 
-# !only a development version! (use with causion)
+# !only a development version! (use with caution)
 
 ## Usage
 
