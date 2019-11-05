@@ -29,11 +29,14 @@
 ### _Host.cshtml
 
 you have to include at a minimum these to your _Host.cshtml
+
 	<link href="_content/FlatpickrBlazor/flatpickr.min.css" rel="stylesheet" />
 	<script src="_content/FlatpickrBlazor/flatpickr.min.js"></script>
 	<script src="_content/FlatpickrBlazor/flatpickr.blazor.js"></script>
 
 
 to add a locale (specify in your FlatpickrOptions variable) add the following script:
+
 	<script src="_content/FlatpickrBlazor/l10n/de.js"></script>
+
 and change the "de.js" with your choosed language
