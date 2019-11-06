@@ -7,6 +7,7 @@
         if (plugOpts.UseMonthSelectPlugin !== null) {
             opts.plugins.push(new monthSelectPlugin(plugOpts.UseMonthSelectPlugin));
         }
+        console.log(plugOpts, opts.plugins, pluginOptions);
         opts.onChange = function (selectedDates, dateStr, instance) {
             return dotNetHelper.invokeMethodAsync("OnChange", selectedDates);
         };

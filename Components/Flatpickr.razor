@@ -3,14 +3,7 @@
 @using FlatpickrBlazor
 @inject IJSRuntime JSRuntime
 
-@if(Hidden)
-{
-    <input @ref="container" hidden />
-}
-else
-{
-    <input @ref="container" />
-}
+    <input @ref="container" hidden="@Hidden" />
 
 @code {
 
