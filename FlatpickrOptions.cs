@@ -17,5 +17,7 @@ namespace FlatpickrBlazor
         public DateTimeOffset? maxDate { get; set; } = null;
         public int minuteIncrement { get; set; } = 5;
         public List<string> defaultDate { get; set; } = null;
+
+        public string mode { get; set; } = "single";
     }
 }

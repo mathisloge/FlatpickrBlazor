@@ -3,12 +3,17 @@
 @using FlatpickrBlazor
 @inject IJSRuntime JSRuntime
 
-    <input @ref="container" hidden="@Hidden" />
+<input @ref="container" hidden="@Hidden" name="@HtmlName" id="@HtmlId" />
 
 @code {
 
     [Parameter]
     public bool Hidden { get; set; } = false;
+
+    [Parameter]
+    public string HtmlName { get; set; }
+    [Parameter]
+    public string HtmlId { get; set; }
 
     [Parameter]
     public FlatpickrOptions Options { get; set; }
