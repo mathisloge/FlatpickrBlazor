@@ -48,18 +48,18 @@
         }
     }
 
-    public async Task<DateTimeOffset[]> GetSelectedDates()
+    public async Task<DateTimeOffset[]> GetSelectedDatesAsync()
     {
         return await JSRuntime.InvokeAsync<DateTimeOffset[]>("flatpickrblazor.selectedDates", container);
     }
 
-    public async Task SetDate(DateTimeOffset date, bool triggerChange = false)
+    public async Task SetDateAsync(DateTimeOffset date, bool triggerChange = false)
     {
         await JSRuntime.InvokeVoidAsync(
                 "flatpickrblazor.setDate", container, date, triggerChange, null);
     }
 
-    public async Task SetDate(DateTimeOffset date, bool triggerChange, string dateStrFormat)
+    public async Task SetDateAsync(DateTimeOffset date, bool triggerChange, string dateStrFormat)
     {
         await JSRuntime.InvokeVoidAsync(
                 "flatpickrblazor.setDate", container, date, triggerChange, dateStrFormat);
