@@ -22,6 +22,8 @@
 
     [Parameter]
     public Action<List<DateTimeOffset>> OnChange { get; set; } = null;
+    [Parameter]
+    public Action OnCreate { get; set; } = null;
 
     private FlatpickrJsHelper jsHelper;
 
@@ -29,7 +31,7 @@
 
     protected override void OnParametersSet()
     {
-        jsHelper = new FlatpickrJsHelper(OnChange);
+        jsHelper = new FlatpickrJsHelper(OnChange, OnCreate);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -57,6 +59,12 @@
     {
         await JSRuntime.InvokeVoidAsync(
                 "flatpickrblazor.setDate", container, date, triggerChange, null);
+    }
+
+    public async Task SetDateAsync(List<DateTimeOffset> dates, bool triggerChange = false)
+    {
+        await JSRuntime.InvokeVoidAsync(
+                "flatpickrblazor.setDates", container, dates, triggerChange, null);
     }
 
     public async Task SetDateAsync(DateTimeOffset date, bool triggerChange, string dateStrFormat)
