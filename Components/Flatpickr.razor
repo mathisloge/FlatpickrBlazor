@@ -55,6 +55,11 @@
         return await JSRuntime.InvokeAsync<DateTimeOffset[]>("flatpickrblazor.selectedDates", container);
     }
 
+    public List<DateTimeOffset> GetSelectedDates()
+    {
+        return jsHelper.DateTimes;
+    }
+
     public async Task SetDateAsync(DateTimeOffset date, bool triggerChange = false)
     {
         await JSRuntime.InvokeVoidAsync(
