@@ -3,10 +3,22 @@
 @using FlatpickrBlazor
 @inject IJSRuntime JSRuntime
 
-<input @ref="container" hidden="@Hidden" name="@HtmlName" id="@HtmlId" data-input="@Options?.wrap" />
+@if(Options != null && Options.wrap)
+{
+    <div @ref="container">
+        <input type="text"  hidden="@Hidden" name="@HtmlName" id="@HtmlId" data-input="@Options.wrap" />
+        @ChildContent
+    </div>
+}
+else
+{
+    <input type="text" @ref="container" hidden="@Hidden" name="@HtmlName" id="@HtmlId" data-input="@Options?.wrap" />
+}
+
 
 @code {
-
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
     [Parameter]
     public bool Hidden { get; set; } = false;
 
@@ -38,7 +50,8 @@
     {
         if (firstRender)
         {
-            string optionsStr = JsonSerializer.Serialize<FlatpickrOptions>(Options, new JsonSerializerOptions {
+            string optionsStr = JsonSerializer.Serialize<FlatpickrOptions>(Options, new JsonSerializerOptions
+            {
                 IgnoreNullValues = true
             });
             string pluginStr = JsonSerializer.Serialize<FlatpickrPluginOptions>(PluginOptions, new JsonSerializerOptions
