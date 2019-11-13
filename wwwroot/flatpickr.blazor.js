@@ -1,6 +1,7 @@
 ﻿window.flatpickrblazor = {
     create: function (element, options, pluginOptions, dotNetHelper) {
         var opts = JSON.parse(options);
+        console.log(opts);
         var plugOpts = JSON.parse(pluginOptions);
         opts.plugins = [];
 
@@ -10,6 +11,12 @@
         opts.onChange = function (selectedDates, dateStr, instance) {
             return dotNetHelper.invokeMethodAsync("OnChange", selectedDates);
         };
+        if (opts.maxDate !== null && opts.maxDate !== undefined && opts.parseMaxDate === true) {
+            opts.maxDate = new Date(opts.maxDate);
+        }
+        if (opts.minDate !== null && opts.minDate !== undefined && opts.parseMinDate === true) {
+            opts.minDate = new Date(opts.minDate);
+        }
         flatpickr(element, opts);
 
         return dotNetHelper.invokeMethodAsync("OnCreate");

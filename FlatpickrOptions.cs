@@ -14,7 +14,9 @@ namespace FlatpickrBlazor
         public bool weekNumbers { get; set; } = false;
         public string locale { get; set; } = "de";
         public DateTimeOffset? minDate { get; set; } = null;
+        public bool parseMinDate { get; set; } = false;
         public DateTimeOffset? maxDate { get; set; } = null;
+        public bool parseMaxDate { get; set; } = false;
         public int minuteIncrement { get; set; } = 5;
         public List<string> defaultDate { get; set; } = null;
 
