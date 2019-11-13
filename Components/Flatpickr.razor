@@ -6,8 +6,9 @@
 @if (Options != null && Options.wrap)
 {
     <div @ref="container" class="@WrapperCssClass">
-        <input type="text"  hidden="@Hidden" name="@HtmlName" id="@HtmlId" data-input="@Options.wrap" class="@InputCssClass"/>
-        @ChildContent
+        @BeforeInputChilds
+        <input type="text" hidden="@Hidden" name="@HtmlName" id="@HtmlId" data-input="@Options.wrap" class="@InputCssClass" />
+        @AfterInputChilds
     </div>
 }
 else
@@ -22,7 +23,9 @@ else
     [Parameter]
     public string WrapperCssClass { get; set; }
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
+    public RenderFragment BeforeInputChilds { get; set; }
+    [Parameter]
+    public RenderFragment AfterInputChilds { get; set; }
     [Parameter]
     public bool Hidden { get; set; } = false;
 
