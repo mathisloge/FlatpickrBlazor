@@ -3,7 +3,7 @@
 @using FlatpickrBlazor
 @inject IJSRuntime JSRuntime
 
-<input @ref="container" hidden="@Hidden" name="@HtmlName" id="@HtmlId" />
+<input @ref="container" hidden="@Hidden" name="@HtmlName" id="@HtmlId" data-input="@Options?.wrap" />
 
 @code {
 

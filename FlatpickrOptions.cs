@@ -19,5 +19,7 @@ namespace FlatpickrBlazor
         public List<string> defaultDate { get; set; } = null;
 
         public string mode { get; set; } = "single";
+
+        public bool wrap { get; set; } = false;
     }
 }
