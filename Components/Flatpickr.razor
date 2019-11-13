@@ -3,20 +3,24 @@
 @using FlatpickrBlazor
 @inject IJSRuntime JSRuntime
 
-@if(Options != null && Options.wrap)
+@if (Options != null && Options.wrap)
 {
-    <div @ref="container">
-        <input type="text"  hidden="@Hidden" name="@HtmlName" id="@HtmlId" data-input="@Options.wrap" />
+    <div @ref="container" class="@WrapperCssClass">
+        <input type="text"  hidden="@Hidden" name="@HtmlName" id="@HtmlId" data-input="@Options.wrap" class="@InputCssClass"/>
         @ChildContent
     </div>
 }
 else
 {
-    <input type="text" @ref="container" hidden="@Hidden" name="@HtmlName" id="@HtmlId" data-input="@Options?.wrap" />
+    <input type="text" @ref="container" hidden="@Hidden" name="@HtmlName" id="@HtmlId" data-input="@Options?.wrap"  class="@InputCssClass"/>
 }
 
 
 @code {
+    [Parameter]
+    public string InputCssClass { get; set; }
+    [Parameter]
+    public string WrapperCssClass { get; set; }
     [Parameter]
     public RenderFragment ChildContent { get; set; }
     [Parameter]
