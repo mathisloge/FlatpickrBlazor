@@ -5,8 +5,8 @@
     <RazorLangVersion>3.0</RazorLangVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <PackageProjectUrl>https://github.com/mathisloge/FlatPickrBlazor</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/mathisloge/FlatPickrBlazor</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/mathisloge/FlatpickrBlazor</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/mathisloge/FlatpickrBlazor</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
     <PackageTags>FlatPickr, DatePicker</PackageTags>
     <NeutralLanguage>en</NeutralLanguage>
