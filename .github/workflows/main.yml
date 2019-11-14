@@ -11,7 +11,5 @@ jobs:
     - uses: actions/checkout@master
     - name: Setup Nuget.exe
       uses: warrenbuckley/Setup-Nuget@v1
-    - name: Run a one-line script
-      run: echo Hello, world!
     - name: Nuget Push
       run: nuget push *.nupkg
