@@ -4,7 +4,7 @@ uses https://github.com/flatpickr/flatpickr under the hood.
 
 Nuget Version is availible under https://www.nuget.org/packages/FlatPickrBlazor
 
-	Install-Package FlatPickrBlazor -Version 1.0.0
+	Install-Package FlatPickrBlazor
 
 ## Usage
 
