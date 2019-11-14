@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace FlatpickrBlazor
 {
@@ -8,13 +9,20 @@ namespace FlatpickrBlazor
     {
         public class MonthSelectOptions
         {
-            public bool shortHand { get; set; } = false;
-            public string dateFormat { get; set; } = "F Y";
-            public string altFormat { get; set; } = "F Y";
-            public string theme { get; set; } = "light";
+            [JsonPropertyName("shortHand")]
+            public bool ShortHand { get; set; } = false;
+
+            [JsonPropertyName("dateFormat")]
+            public string DateFormat { get; set; } = "F Y";
+
+            [JsonPropertyName("altFormat")]
+            public string AltFormat { get; set; } = "F Y";
+
+            [JsonPropertyName("theme")]
+            public string Theme { get; set; } = "light";
         }
+
         // set to a instance to use the monthSelectPlugin
         public MonthSelectOptions UseMonthSelectPlugin { get; set; } = null;
-        
     }
 }

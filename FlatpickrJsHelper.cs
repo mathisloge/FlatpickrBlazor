@@ -9,12 +9,14 @@ namespace FlatpickrBlazor
     {
         private readonly Action<List<DateTimeOffset>> _onChange;
         private readonly Action _onCreate;
+
         public FlatpickrJsHelper(Action<List<DateTimeOffset>> onChange, Action onCreate)
         {
             _onChange = onChange;
             _onCreate = onCreate;
         }
         public List<DateTimeOffset> DateTimes { get; set; }
+
         [JSInvokable]
         public void OnChange(DateTimeOffset[] dateTimes)
         {
