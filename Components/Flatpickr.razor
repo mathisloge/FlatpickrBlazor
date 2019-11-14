@@ -1,52 +1,159 @@
 ﻿@using Microsoft.JSInterop
 @using System.Text.Json
+@using System.Text.Json.Serialization
 @using FlatpickrBlazor
 @inject IJSRuntime JSRuntime
+@implements IFlatpickrOptions
 
-@if (Options != null && Options.wrap)
+@if (String.IsNullOrWhiteSpace(CustomInputId))
 {
-    <div @ref="container" class="@WrapperCssClass">
-        @BeforeInputChilds
-        <input type="text" hidden="@Hidden" name="@HtmlName" id="@HtmlId" data-input="@Options.wrap" class="@InputCssClass" />
-        @AfterInputChilds
-    </div>
+    @if (Options != null && Options.Wrap)
+    {
+        <div @ref="container" class="@WrapperCssClass">
+            @BeforeInputChilds
+            <input type="text" data-input="@Options.Wrap" @attributes="Attributes"/>
+            @AfterInputChilds
+        </div>
+    }
+    else {
+        <input type="text" @ref="container" data-input="@Options?.Wrap" @attributes="Attributes"/>
+    }
 }
-else
-{
-    <input type="text" @ref="container" hidden="@Hidden" name="@HtmlName" id="@HtmlId" data-input="@Options?.wrap"  class="@InputCssClass"/>
-}
-
 
 @code {
-    [Parameter]
-    public string InputCssClass { get; set; }
+    [Parameter(CaptureUnmatchedValues = true)]
+    public Dictionary<string, object> Attributes { get; set; }
+
     [Parameter]
     public string WrapperCssClass { get; set; }
+
     [Parameter]
     public RenderFragment BeforeInputChilds { get; set; }
+
     [Parameter]
     public RenderFragment AfterInputChilds { get; set; }
-    [Parameter]
-    public bool Hidden { get; set; } = false;
 
     [Parameter]
-    public string HtmlName { get; set; }
-    [Parameter]
-    public string HtmlId { get; set; }
+    public FlatpickrOptions Options { get; set; } = new FlatpickrOptions();
 
-    [Parameter]
-    public FlatpickrOptions Options { get; set; }
     [Parameter]
     public FlatpickrPluginOptions PluginOptions { get; set; } = new FlatpickrPluginOptions();
 
     [Parameter]
     public Action<List<DateTimeOffset>> OnChange { get; set; } = null;
+
     [Parameter]
     public Action OnCreate { get; set; } = null;
+
+    [Parameter]
+    public string CustomInputId { get; set; }
+
+    #region Options
+
+    [Parameter]
+    public string DateFormat {
+        get => Options.DateFormat;
+        set => Options.DateFormat = value;
+    }
+
+    [Parameter]
+    public bool Inline {
+        get => Options.Inline;
+        set => Options.Inline = value;
+    }
+
+    [Parameter]
+    public bool NoCalendar {
+        get => Options.NoCalendar;
+        set => Options.NoCalendar = value;
+    }
+
+    [Parameter]
+    public bool EnableTime {
+        get => Options.EnableTime;
+        set => Options.EnableTime = value;
+    }
+
+    [Parameter]
+    public bool Time24Hours {
+        get => Options.Time24Hours;
+        set => Options.Time24Hours = value;
+    }
+
+    [Parameter]
+    public bool WeekNumbers {
+        get => Options.WeekNumbers;
+        set => Options.WeekNumbers = value;
+    }
+
+    [Parameter]
+    public string Locale {
+        get => Options.Locale;
+        set => Options.Locale = value;
+    }
+
+    [Parameter]
+    public DateTimeOffset? MinDate {
+        get => Options.MinDate;
+        set => Options.MinDate = value;
+    }
+
+    [Parameter]
+    public bool ParseMinDate {
+        get => Options.ParseMinDate;
+        set => Options.ParseMinDate = value;
+    }
+
+    [Parameter]
+    public DateTimeOffset? MaxDate {
+        get => Options.MaxDate;
+        set => Options.MaxDate = value;
+    }
+
+    [Parameter]
+    public bool ParseMaxDate {
+        get => Options.ParseMaxDate;
+        set => Options.ParseMaxDate = value;
+    }
+
+    [Parameter]
+    public int HourIncrement {
+        get => Options.HourIncrement;
+        set => Options.HourIncrement = value;
+    }
+
+    [Parameter]
+    public int MinuteIncrement {
+        get => Options.MinuteIncrement;
+        set => Options.MinuteIncrement = value;
+    }
+
+    // FIXME: can array be used as a parameter?
+    [Parameter]
+    public List<string> DefaultDate {
+        get => Options.DefaultDate;
+        set => Options.DefaultDate = value;
+    }
+
+    [Parameter]
+    public FlatpickrOptionsMode Mode {
+        get => Options.Mode;
+        set => Options.Mode = value;
+    }
+
+    [Parameter]
+    public bool Wrap {
+        get => Options.Wrap;
+        set => Options.Wrap = value;
+    }
+
+    #endregion
 
     private FlatpickrJsHelper jsHelper;
 
     private ElementReference container;
+
+    private object InputReference => String.IsNullOrWhiteSpace(CustomInputId) ? (object) container : CustomInputId;
 
     protected override void OnParametersSet()
     {
@@ -57,22 +164,24 @@ else
     {
         if (firstRender)
         {
-            string optionsStr = JsonSerializer.Serialize<FlatpickrOptions>(Options, new JsonSerializerOptions
+            string optionsStr = JsonSerializer.Serialize(Options, new JsonSerializerOptions
             {
-                IgnoreNullValues = true
+                IgnoreNullValues = true,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, false) }
             });
-            string pluginStr = JsonSerializer.Serialize<FlatpickrPluginOptions>(PluginOptions, new JsonSerializerOptions
+            string pluginStr = JsonSerializer.Serialize(PluginOptions, new JsonSerializerOptions
             {
-                IgnoreNullValues = false
+                IgnoreNullValues = false,
+                Converters = { new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, false)}
             });
             await JSRuntime.InvokeVoidAsync(
-                "flatpickrblazor.create", container, optionsStr, pluginStr, DotNetObjectReference.Create(jsHelper));
+                "flatpickrblazor.create", InputReference, optionsStr, pluginStr, DotNetObjectReference.Create(jsHelper));
         }
     }
 
     public async Task<List<DateTimeOffset>> GetSelectedDatesAsync()
     {
-        return await JSRuntime.InvokeAsync<List<DateTimeOffset>>("flatpickrblazor.selectedDates", container);
+        return await JSRuntime.InvokeAsync<List<DateTimeOffset>>("flatpickrblazor.selectedDates", InputReference);
     }
 
     public List<DateTimeOffset> GetSelectedDates()
@@ -83,18 +192,18 @@ else
     public async Task SetDateAsync(DateTimeOffset date, bool triggerChange = false)
     {
         await JSRuntime.InvokeVoidAsync(
-                "flatpickrblazor.setDate", container, date, triggerChange, null);
+                "flatpickrblazor.setDate", InputReference, date, triggerChange, null);
     }
 
     public async Task SetDateAsync(List<DateTimeOffset> dates, bool triggerChange = false)
     {
         await JSRuntime.InvokeVoidAsync(
-                "flatpickrblazor.setDates", container, dates, triggerChange, null);
+                "flatpickrblazor.setDates", InputReference, dates, triggerChange, null);
     }
 
     public async Task SetDateAsync(DateTimeOffset date, bool triggerChange, string dateStrFormat)
     {
         await JSRuntime.InvokeVoidAsync(
-                "flatpickrblazor.setDate", container, date, triggerChange, dateStrFormat);
+                "flatpickrblazor.setDate", InputReference, date, triggerChange, dateStrFormat);
     }
 }

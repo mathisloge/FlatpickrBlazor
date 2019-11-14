@@ -1,7 +1,7 @@
 ﻿window.flatpickrblazor = {
     create: function (element, options, pluginOptions, dotNetHelper) {
+        element = this.__getElement(element);
         var opts = JSON.parse(options);
-        console.log(opts);
         var plugOpts = JSON.parse(pluginOptions);
         opts.plugins = [];
 
@@ -22,15 +22,24 @@
         return dotNetHelper.invokeMethodAsync("OnCreate");
     },
     selectedDates: function (element) {
+        element = this.__getElement(element);
         return element._flatpickr.selectedDates;
     },
     setDate: function (element, date, triggerChange, dateStrFormat) {
+        element = this.__getElement(element);
         var parsedDate = new Date(date);
         element._flatpickr.setDate(parsedDate, triggerChange, dateStrFormat);
     },
     setDates: function (element, dates, triggerChange, dateStrFormat) {
+        element = this.__getElement(element);
         var parsedDates = dates.map(date => new Date(date));
         element._flatpickr.setDate(parsedDates, triggerChange, dateStrFormat);
+    },
+    __getElement: function(element) {
+        // .NET can return either an element itself, or its string id
+        return this.__isString(element) ? document.getElementById(element) : element;
+    },
+    __isString: function(x) {
+        return Object.prototype.toString.call(x) === "[object String]";
     }
-
 };
