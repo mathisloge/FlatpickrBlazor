@@ -16,6 +16,7 @@
     <Authors>Mathis Logemann</Authors>
     <Company>WebTechnologies</Company>
     <Description>Makes use of https://github.com/flatpickr/flatpickr</Description>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
 
