@@ -11,6 +11,7 @@ Nuget Version is availible under https://www.nuget.org/packages/FlatPickrBlazor
 ## Usage
 
 ### MyFlatpickr.razor
+```
 <div>
 	<Flatpickr hidden class="my-custom-class" @ref="_datepicker" Options="@calendarOpts" OnChange="@OnChangeDate" />
 	<Flatpickr Options="@monthPickerOpts" PluginOptions="@monthPluginOptions" />
@@ -53,7 +54,7 @@ Nuget Version is availible under https://www.nuget.org/packages/FlatPickrBlazor
         }
     }
 }
-
+```
 ### _Host.cshtml
 
 you have to include at a minimum these to your _Host.cshtml
