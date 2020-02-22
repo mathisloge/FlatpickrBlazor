@@ -2,6 +2,8 @@
 
 uses https://github.com/flatpickr/flatpickr under the hood. 
 
+## For a ready to use example, visit https://github.com/mathisloge/FlatpickrBlazorExample
+
 Nuget Version is availible under https://www.nuget.org/packages/FlatPickrBlazor
 
 	Install-Package FlatPickrBlazor
@@ -9,40 +11,48 @@ Nuget Version is availible under https://www.nuget.org/packages/FlatPickrBlazor
 ## Usage
 
 ### MyFlatpickr.razor
-	<div>
-		<Flatpickr hidden class="my-custom-class" @ref="_datepicker" Options="@calendarOpts" OnChange="@OnChangeDate" />
-		<Flatpickr Options="@monthPickerOpts" PluginOptions="@monthPluginOptions" />
-	</div>
+<div>
+	<Flatpickr hidden class="my-custom-class" @ref="_datepicker" Options="@calendarOpts" OnChange="@OnChangeDate" />
+	<Flatpickr Options="@monthPickerOpts" PluginOptions="@monthPluginOptions" />
+</div>
 
-	@code{
-		private Flatpickr _datepicker;
+@code{
+    private Flatpickr _datepicker;
 
-		private FlatpickrOptions calendarOpts = new FlatpickrOptions{
-			Inline = true,
-			WeekNumbers = true,
-			MaxDate = DateTimeOffset.UtcNow,
-			Locale = "de"
-		};
+    private FlatpickrOptions calendarOpts = new FlatpickrOptions
+    {
+        Inline = true,
+        WeekNumbers = true,
+        MaxDate = DateTimeOffset.UtcNow,
+        Locale = "de",
+        Mode = FlatpickrOptionsMode.Range
+    };
 
-		private FlatpickrOptions monthPickerOpts = new FlatpickrOptions{
-			Inline = true
-		};
+    private FlatpickrOptions monthPickerOpts = new FlatpickrOptions
+    {
+        Inline = true
+    };
 
-		// these are already default values, so new FlatpickrPluginOptions() would fullfill everything, if you want default values
-		private FlatpickrPluginOptions monthPluginOptions = new FlatpickrPluginOptions {
-		    ShortHand = false, 
+    // these are already default values, so new FlatpickrPluginOptions() would fullfill everything, if you want default values
+    private FlatpickrPluginOptions monthPluginOptions = new FlatpickrPluginOptions
+    {
+        UseMonthSelectPlugin = new FlatpickrPluginOptions.MonthSelectOptions
+        {
+            ShortHand = false,
             DateFormat = "F Y",
             AltFormat = "F Y",
             Theme = "light"
-		};
+        }
+    };
 
-		private void OnChangeDate(List<DateTimeOffset> dateTimes) {
-			foreach(var dateTime in dateTimes) {
-				Console.WriteLine(dateTime.ToString());
-			}
-			_datepicker.SetDate(DateTimeOffset.Now);
-		}
-	}
+    private void OnChangeDate(List<DateTimeOffset> dateTimes)
+    {
+        foreach (var dateTime in dateTimes)
+        {
+            Console.WriteLine(dateTime.ToString());
+        }
+    }
+}
 
 ### _Host.cshtml
 
