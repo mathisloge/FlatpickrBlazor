@@ -9,7 +9,7 @@
   "author": "Mathis Logemann",
   "license": "MIT",
   "dependencies": {
-    "flatpickr": "^4.6.6"
+    "flatpickr": "^4.6.9"
   },
   "devDependencies": {
     "gulp": "^4.0.2"

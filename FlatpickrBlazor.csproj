@@ -15,14 +15,14 @@
     <Authors>Mathis Logemann</Authors>
     <Company>WebTechnologies</Company>
     <Description>Makes use of https://github.com/flatpickr/flatpickr</Description>
-    <Version>5.0.0</Version>
+    <Version>5.0.8</Version>
     <AssemblyVersion>5.0.0.0</AssemblyVersion>
   </PropertyGroup>
 
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0.0-rc.2.20475.17" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.0-rc.2.20475.17" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.8" />
   </ItemGroup>
 
 
